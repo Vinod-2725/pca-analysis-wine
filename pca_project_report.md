@@ -4,8 +4,7 @@
 ---
 
 **Student:** G Vinod Chandra Kumar 
-**Course:** PH 4130 — Statistical Methods in Physics  
-**Semester:** [Semester, Year]  
+**Course:** PH 4130 — Statistical Methods in Physics    
 **Datasets:** Wine (sklearn), Digits (sklearn)  
 **Tools:** Python 3, NumPy, scikit-learn, Matplotlib, Seaborn, SciPy
 
