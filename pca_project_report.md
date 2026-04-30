@@ -1,10 +1,10 @@
 # Principal Component Analysis: A Comprehensive Study
-## PH 4130 — Semester Project Report
+## EP4130 — Semester Project Report
 
 ---
 
 **Student:** G Vinod Chandra Kumar 
-**Course:** PH 4130 — Statistical Methods in Physics    
+**Course:** EP4130 — Statistical Methods in Physics    
 **Datasets:** Wine (sklearn), Digits (sklearn)  
 **Tools:** Python 3, NumPy, scikit-learn, Matplotlib, Seaborn, SciPy
 
@@ -12,7 +12,7 @@
 
 ## Abstract
 
-This project presents a comprehensive study of Principal Component Analysis (PCA), covering its mathematical derivation, a from-scratch implementation, extensive visual analysis, comparison with nonlinear dimensionality reduction (t-SNE), downstream classification experiments, and robustness testing via jackknife resampling. Applied to the Wine dataset (178 samples, 13 features, 3 classes) and the Digits dataset (1797 samples, 64 features, 10 classes), we demonstrate that PCA achieves significant dimensionality reduction — from 13 to 4 dimensions for 95% variance retention in Wine, and 64 to ~29 dimensions in Digits — with negligible loss in downstream classification accuracy. Robustness tests confirm that the PCA solution is stable under 10% data perturbation.
+This project presents a comprehensive study of Principal Component Analysis (PCA), covering its mathematical derivation, a from-scratch implementation, extensive visual analysis, comparison with nonlinear dimensionality reduction (t-SNE), downstream classification experiments, and robustness testing via jackknife resampling. Applied to the Wine dataset (178 samples, 13 features, 3 classes) and the Digits dataset (1797 samples, 64 features, 10 classes), we demonstrate that PCA achieves significant dimensionality reduction — from 13 to 10 dimensions for 95% variance retention in Wine, and 64 to ~39 dimensions in Digits — with negligible loss in downstream classification accuracy. Robustness tests confirm that the PCA solution is stable under 10% data perturbation.
 
 ---
 
@@ -125,10 +125,10 @@ The scree plot (Figure 4) reveals a pronounced elbow after PC2. Quantitatively:
 | 4 | 73.6% |
 | 5 | 80.2% |
 | 7 | 90.1% |
-| **~4** | **~95%** |
+| **~10** | **~95%** |
 | 13 | 100% |
 
-This means **4 out of 13 original features** capture 95% of the data's variance. The remaining 9 dimensions mostly encode measurement noise and fine-grained variation.
+This means **10 out of 13 original features** capture 95% of the data's variance. The remaining 3 dimensions mostly encode measurement noise and fine-grained variation.
 
 ### 5.2 Interpretation of Principal Components
 
@@ -136,7 +136,7 @@ The biplot (Figure 6) and loadings heatmap (Figure 7) enable physical interpreta
 
 **PC1** (36% variance): Strong positive loadings on flavanoids, total phenols, OD280/OD315, and proanthocyanins. Strong negative loading on color intensity and malic acid. PC1 separates wines primarily by their **polyphenolic richness** — wines high on PC1 are phenolic-rich, low-acid cultivar class 1 wines.
 
-**PC2** (19% variance): Dominated by proline and alcohol. PC2 separates cultivar class 3 (high alcohol, high proline) from class 2.
+**PC2** (19% variance): Dominated by color intensity and alcohol. PC2 separates cultivar class 3 (high alcohol, high color intensity) from class 2.
 
 This is a key advantage of PCA over nonlinear methods: the axes are interpretable as linear combinations of physical variables.
 
@@ -157,16 +157,16 @@ Figure 10 and Figure 11 show classification accuracy as a function of the number
 | 1 | 0.64 | 0.72 |
 | 2 | 0.92 | 0.97 |
 | 3 | 0.95 | 0.98 |
-| **4** | **0.95** | **0.98** |
+| **10** | **0.95** | **0.983** |
 | 13 (raw) | 0.94 | 0.99 |
 
-At $k=4$ (95% variance), Logistic Regression achieves 98% accuracy — essentially matching the full-dimensional result, while using 3× fewer features. This demonstrates PCA's value: it removes noise dimensions that confuse classifiers while retaining discriminative structure.
+At $k=10$ (95% variance), Logistic Regression achieves 98% accuracy — essentially matching the full-dimensional result,This demonstrates PCA's value: it removes noise dimensions that confuse classifiers while retaining discriminative structure.
 
-KNN degrades more sharply at very low $k$ (it is sensitive to distance distortions), but recovers by $k=4$.
+KNN degrades more sharply at very low $k$ (it is sensitive to distance distortions), but recovers by $k=10$.
 
 ### 5.5 Digits Dataset
 
-The Digits analysis (Figure 12) shows that 95% variance is retained with only **29 of 64 components** — a 55% reduction. The pixel reconstruction grid (Figure 12b) shows visually recognizable digits already at $k=5$; at $k=15$, the reconstruction is near-perfect.
+The Digits analysis (Figure 12) shows that 95% variance is retained with only **39 of 64 components**. The pixel reconstruction grid (Figure 12b) shows visually recognizable digits already at $k=5$; at $k=15$, the reconstruction is near-perfect.
 
 ### 5.6 Jackknife Robustness
 
@@ -213,12 +213,10 @@ PCA is effective when:
 This project systematically studied PCA from its linear algebraic foundations through practical application. Key takeaways:
 
 1. PCA is mathematically equivalent to eigendecomposition of the covariance matrix and the thin SVD of the centered data matrix — we implemented both and verified agreement to machine precision.
-2. For the Wine dataset, 4 components (out of 13) capture 95% of variance, with no statistically significant loss in classification accuracy compared to using all 13 features.
-3. PCA projections are interpretable — PC1 captures polyphenolic richness and PC2 captures alcohol/proline content, matching known wine chemistry.
+2. For the Wine dataset, 10 components (out of 13) capture 95% of variance, with no statistically significant loss in classification accuracy compared to using all 13 features.
+3. PCA projections are interpretable — PC1 captures polyphenolic richness and PC2 captures alcohol/color intensity content, matching known wine chemistry.
 4. t-SNE produces visually cleaner clusters but is nonlinear, non-interpretable, and cannot generalize to new data. PCA remains the preferred preprocessing method for supervised learning pipelines.
 5. The jackknife analysis confirms that the PCA solution is stable and not driven by outliers or influential subsets.
-
-The complete analysis spans 13 figures and ~950 lines of documented Python code across 8 modules.
 
 ---
 
