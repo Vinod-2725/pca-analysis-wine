@@ -4,7 +4,7 @@
 ---
 
 **Student:** G Vinod Chandra Kumar, ME23BTECH11021
-**Course:** EP4130 — Statistical Methods in Physics    
+**Course:** EP4130 — DataScience Analysis 
 **Datasets:** Wine (sklearn), Digits (sklearn)  
 **Tools:** Python 3, NumPy, scikit-learn, Matplotlib, Seaborn, SciPy
 
